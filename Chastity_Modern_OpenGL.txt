@@ -1,0 +1,17 @@
+This file is my list of links and other resources to help me learn modern OpenGL. I'm good with the legacy fixed function pipeline and I tried to learn modern OpenGL years ago and gave up.
+
+I'm not usually someone who gives up easily so as you can imagine this means that I found modern OpenGL to be extremely difficult compared to all my other programming projects. But nonetheless I shall continue in my quest to draw shapes using modern OpenGL. Not because I need it(SDL2 provides absolutely everything I need for my game development), but because I just want to finish what I started.
+
+These are good sites although a little confusing for me.
+
+https://open.gl/
+https://learnopengl.com/
+https://gist.github.com/koute/7391344
+https://docs.gl/
+
+Although learning modern OpenGL is useful in some cases, SDL already has a feature to draw arbitrary numbers of triangles with the new SDL_RenderGeometry. There is very little that it can't do. This is my primary means of doing filled polygons.
+
+https://wiki.libsdl.org/SDL2/SDL_RenderGeometry
+https://github.com/chastitywhiterose/SDL_Chaste_Triangle
+
+
