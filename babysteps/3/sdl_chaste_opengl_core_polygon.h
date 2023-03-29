@@ -91,4 +91,3 @@ void gl_chaste_polygon()
 
 }
 
-

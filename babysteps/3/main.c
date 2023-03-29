@@ -126,9 +126,10 @@ glEnableVertexAttribArray(posAttrib);
  
  /*modify polygon before starting main loop*/
  main_polygon.sides=5;
- main_polygon.step=1;
+ main_polygon.step=2;
  main_polygon.radians=0;
 
+ SDL_GL_SetSwapInterval(1);
 
  loop=1;
  while(loop)
@@ -138,11 +139,12 @@ glEnableVertexAttribArray(posAttrib);
   
   glClear(GL_COLOR_BUFFER_BIT);
   
-  glUniform3f(uniColor, 0.0f, 1.0f, 1.0f);
+  glUniform3f(uniColor, 0.0f, 1.0f, 0.0f);
   gl_chaste_polygon();
+  main_polygon.radians+=PI/180; 
   
   glUniform3f(uniColor, 0.0f, 0.0f, 1.0f);
-  chaste_gl_triangle(700,350,800,350,750,250);
+  chaste_gl_triangle(600,350,700,350,650,250);
   
   SDL_PollEvent( &event );
   if( event.type == SDL_QUIT ){loop=0;}
