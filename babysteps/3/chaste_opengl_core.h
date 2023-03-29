@@ -37,3 +37,5 @@ void chaste_gl_triangle(float x0,float y0,float x1,float y1,float x2,float y2)
  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
  glDrawArrays(GL_TRIANGLES, 0, 3);
 }
+
+

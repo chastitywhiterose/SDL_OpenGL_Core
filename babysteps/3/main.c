@@ -21,6 +21,7 @@ float vertices[]=
 };
 
 #include "chaste_opengl_core.h"
+#include "sdl_chaste_opengl_core_polygon.h"
 
 GLuint vao;
 GLuint vbo;
@@ -120,21 +121,29 @@ glEnableVertexAttribArray(posAttrib);
  /*set background color*/
  glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
+/*set up the regular polygon*/
+ init_polygon(); /*set up polygon with default values*/
+ 
+ /*modify polygon before starting main loop*/
+ main_polygon.sides=5;
+ main_polygon.step=1;
+ main_polygon.radians=0;
+
+
  loop=1;
  while(loop)
  {
   /*SDL_GetWindowSize(window, &width,&height);
   glViewport( 0, 0, width, height );*/
   
- glClear(GL_COLOR_BUFFER_BIT);
- glDrawArrays(GL_TRIANGLES, 0, 3);
-  /*stuff will go here in next step*/
+  glClear(GL_COLOR_BUFFER_BIT);
+  
+  glUniform3f(uniColor, 0.0f, 1.0f, 1.0f);
+  gl_chaste_polygon();
   
   glUniform3f(uniColor, 0.0f, 0.0f, 1.0f);
   chaste_gl_triangle(700,350,800,350,750,250);
   
-  
-
   SDL_PollEvent( &event );
   if( event.type == SDL_QUIT ){loop=0;}
   if(event.type == SDL_KEYDOWN)
