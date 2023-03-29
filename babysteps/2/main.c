@@ -7,7 +7,6 @@
 SDL_Window* window;
 SDL_GLContext context;
 SDL_Event event;
-GLuint vbo;
 int loop=1;
 
 float vertices[]=
@@ -16,6 +15,9 @@ float vertices[]=
  0.5f, -0.5f, /* Vertex 2 (X, Y) */
  -0.5f, -0.5f  /* Vertex 3 (X, Y) */
 };
+
+GLuint vao;
+GLuint vbo;
 
 GLuint vertexShader;
 const char *vertexSource=
@@ -38,6 +40,9 @@ const char *fragmentSource=
 /*for checking if shaders are ok*/
 GLint status;
 char buffer[512];
+GLuint shaderProgram;
+
+GLint posAttrib;
 
 int main(int argc, char *argv[])
 {
@@ -55,6 +60,10 @@ int main(int argc, char *argv[])
  /*use modern functions*/ 
  glewExperimental = GL_TRUE;
  glewInit();
+ 
+ /*vertex array object*/
+glGenVertexArrays(1, &vao);
+glBindVertexArray(vao);
  
  /*set up the vertex buffer object*/
  glGenBuffers(1, &vbo);
@@ -83,10 +92,27 @@ glCompileShader(fragmentShader);
 glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &status);
 if(status==GL_TRUE){printf("Fragment Shader is Compiled\n");}
 
+/*connect the shaders into a program*/
+shaderProgram = glCreateProgram();
+glAttachShader(shaderProgram, vertexShader);
+glAttachShader(shaderProgram, fragmentShader);
+glLinkProgram(shaderProgram);
+glUseProgram(shaderProgram);
+
+/*set up the position attribute as defined in the shader program*/
+posAttrib = glGetAttribLocation(shaderProgram, "position");
+glVertexAttribPointer(posAttrib, 2, GL_FLOAT, GL_FALSE, 0, 0);
+glEnableVertexAttribArray(posAttrib);
+
+
+
+       glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
  loop=1;
  while(loop)
  {
-
+ glClear(GL_COLOR_BUFFER_BIT);
+glDrawArrays(GL_TRIANGLES, 0, 3);
   /*stuff will go here in next step*/
 
   SDL_PollEvent( &event );
@@ -99,6 +125,14 @@ if(status==GL_TRUE){printf("Fragment Shader is Compiled\n");}
   SDL_GL_SwapWindow( window );
   
  }
+ 
+ 
+ glDeleteProgram(shaderProgram);
+ glDeleteShader(fragmentShader);
+ glDeleteShader(vertexShader);
+ glDeleteBuffers(1, &vbo);
+ glDeleteVertexArrays(1, &vao);
+ 
 
  SDL_GL_DeleteContext(context);
  SDL_Quit();
@@ -115,4 +149,6 @@ gcc -Wall -ansi -pedantic main.c -o main `sdl2-config --cflags --libs` -lOpenGL 
 
 It only makes a window and OpenGL context. Nothing else. It is merely the start of things.
 */
+
+
 
