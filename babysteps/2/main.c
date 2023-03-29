@@ -23,8 +23,15 @@ char vertexSource[]=
 "void main()\n"
 "{\n"
 " gl_Position = vec4(position, 0.0, 1.0);\n"
-"}\n"
-;
+"}\n";
+
+char fragmentSource[]=
+"#version 150 core\n"
+"out vec4 outColor;\n"
+"void main()\n"
+"{\n"
+" outColor = vec4(1.0, 1.0, 1.0, 1.0);\n"
+"}\n";
 
 int main(int argc, char *argv[])
 {
@@ -48,7 +55,14 @@ int main(int argc, char *argv[])
  glBindBuffer(GL_ARRAY_BUFFER, vbo);
  glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
+ /*optionally, display the shader source to test if it is correct*/
+/*
  printf("Vertex Shader Source:\n\n%s\n",vertexSource);
+ printf("Fragment Shader Source:\n\n%s\n",fragmentSource);
+*/
+
+
+
 
  loop=1;
  while(loop)
