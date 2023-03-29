@@ -39,3 +39,30 @@ void chaste_gl_triangle(float x0,float y0,float x1,float y1,float x2,float y2)
 }
 
 
+
+void chaste_gl_rectangle(float x,float y,float w,float h)
+{
+ /*draw first half*/
+ vertices[0]=ortho_x(x);
+ vertices[1]=ortho_y(y);
+ vertices[2]=ortho_x(x+w);
+ vertices[3]=ortho_y(y);
+ vertices[4]=ortho_x(x);
+ vertices[5]=ortho_y(y+h);
+ glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+ glDrawArrays(GL_TRIANGLES, 0, 3);
+ 
+ /*draw second half*/
+ 
+ vertices[0]=ortho_x(x+w);
+ vertices[1]=ortho_y(y+h);
+ vertices[2]=ortho_x(x+w);
+ vertices[3]=ortho_y(y);
+ vertices[4]=ortho_x(x);
+ vertices[5]=ortho_y(y+h);
+ glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+ glDrawArrays(GL_TRIANGLES, 0, 3);
+
+}
+
+

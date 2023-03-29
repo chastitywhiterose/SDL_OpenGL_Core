@@ -146,6 +146,9 @@ glEnableVertexAttribArray(posAttrib);
   glUniform3f(uniColor, 0.0f, 0.0f, 1.0f);
   chaste_gl_triangle(600,350,700,350,650,250);
   
+  glUniform3f(uniColor, 1.0f, 0.0f, 0.0f);
+  chaste_gl_rectangle(100,100,100,100);
+  
   SDL_PollEvent( &event );
   if( event.type == SDL_QUIT ){loop=0;}
   if(event.type == SDL_KEYDOWN)
