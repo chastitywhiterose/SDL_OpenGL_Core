@@ -17,7 +17,8 @@ float vertices[]=
  -0.5f, -0.5f  /* Vertex 3 (X, Y) */
 };
 
-char vertexSource[]=
+GLuint vertexShader;
+const char *vertexSource=
 "#version 150 core\n"
 "in vec2 position;\n"
 "void main()\n"
@@ -25,13 +26,18 @@ char vertexSource[]=
 " gl_Position = vec4(position, 0.0, 1.0);\n"
 "}\n";
 
-char fragmentSource[]=
+GLuint fragmentShader;
+const char *fragmentSource=
 "#version 150 core\n"
 "out vec4 outColor;\n"
 "void main()\n"
 "{\n"
 " outColor = vec4(1.0, 1.0, 1.0, 1.0);\n"
 "}\n";
+
+/*for checking if shaders are ok*/
+GLint status;
+char buffer[512];
 
 int main(int argc, char *argv[])
 {
@@ -61,8 +67,21 @@ int main(int argc, char *argv[])
  printf("Fragment Shader Source:\n\n%s\n",fragmentSource);
 */
 
+/*compile the vertex shader*/
+vertexShader = glCreateShader(GL_VERTEX_SHADER);
+glShaderSource(vertexShader, 1, &vertexSource, NULL);
+glCompileShader(vertexShader);
 
+glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &status);
+if(status==GL_TRUE){printf("Vertex Shader is Compiled\n");}
 
+/*compile the fragment shader*/
+fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
+glCompileShader(fragmentShader);
+
+glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &status);
+if(status==GL_TRUE){printf("Fragment Shader is Compiled\n");}
 
  loop=1;
  while(loop)
