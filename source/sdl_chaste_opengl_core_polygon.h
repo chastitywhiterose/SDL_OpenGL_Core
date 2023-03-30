@@ -79,7 +79,7 @@ void gl_chaste_polygon()
  while(i<main_polygon.sides)
  {
   i1=(i+main_polygon.step)%main_polygon.sides;
-  chaste_gl_triangle
+  gl_chaste_triangle
   (
    main_polygon.cx,main_polygon.cy,
    polygon_xpoints[i],polygon_ypoints[i],

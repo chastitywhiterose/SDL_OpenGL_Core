@@ -44,7 +44,7 @@ float (*ortho_y)(float)=gl_chastity_ortho_y;
  https://docs.gl/gl3/glDrawArrays
 */
 
-void chaste_gl_triangle(float x0,float y0,float x1,float y1,float x2,float y2)
+void gl_chaste_triangle(float x0,float y0,float x1,float y1,float x2,float y2)
 {
  vertices[0]=ortho_x(x0);
  vertices[1]=ortho_y(y0);
@@ -64,7 +64,7 @@ for the 6 corners for 2 triangles
 2 triangles = 6 points of X and Y coordinates
 */
 
-void chaste_gl_rectangle(float x,float y,float w,float h)
+void gl_chaste_rectangle(float x,float y,float w,float h)
 {
  vertices[0]=ortho_x(x);
  vertices[1]=ortho_y(y);

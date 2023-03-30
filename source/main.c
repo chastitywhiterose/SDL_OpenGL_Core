@@ -20,8 +20,11 @@ float vertices[0x1000000]=
  -0.5f, -0.5f  /* Vertex 3 (X, Y) */
 };
 
+GLint uniColor;
+
 #include "chaste_opengl_core.h"
 #include "sdl_chaste_opengl_core_polygon.h"
+#include "sdl_chaste_opengl_core_checkerboard.h"
 
 GLuint vao;
 GLuint vbo;
@@ -45,7 +48,7 @@ const char *fragmentSource=
 " outColor = vec4(triangleColor, 1.0);\n"
 "}\n";
 
-GLint uniColor;
+
 
 /*for checking if shaders are ok*/
 GLint status;
@@ -60,7 +63,7 @@ int main(int argc, char *argv[])
  
  SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
- SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 2);
+ SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
  SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
  
  window = SDL_CreateWindow("OpenGL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE);
@@ -128,6 +131,8 @@ glEnableVertexAttribArray(posAttrib);
  main_polygon.sides=5;
  main_polygon.step=2;
  main_polygon.radians=0;
+ 
+ init_checkerboard();
 
 /*
  can set whether the screen refreshes in sync with the hardware or whether it is unlimited
@@ -142,16 +147,21 @@ glEnableVertexAttribArray(posAttrib);
   glViewport( 0, 0, width, height );*/
   
   glClear(GL_COLOR_BUFFER_BIT);
+ 
+  glUniform3f(uniColor, 1.0f, 1.0f, 0.0f);
+  gl_chaste_checker();
   
   glUniform3f(uniColor, 0.0f, 1.0f, 0.0f);
   gl_chaste_polygon();
   main_polygon.radians+=PI/180; 
   
   glUniform3f(uniColor, 0.0f, 0.0f, 1.0f);
-  chaste_gl_triangle(600,350,700,350,650,250);
+  gl_chaste_triangle(600,350,700,350,650,250);
   
   glUniform3f(uniColor, 1.0f, 0.0f, 0.0f);
-  chaste_gl_rectangle(100,100,100,100);
+  gl_chaste_rectangle(100,100,100,100);
+  
+
   
   SDL_PollEvent( &event );
   if( event.type == SDL_QUIT ){loop=0;}
