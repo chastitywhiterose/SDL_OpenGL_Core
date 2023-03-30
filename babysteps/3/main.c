@@ -13,7 +13,7 @@ SDL_GLContext context;
 SDL_Event event;
 int loop=1;
 
-float vertices[]=
+float vertices[0x1000000]=
 {
  0.0f,  0.5f, /* Vertex 1 (X, Y) */
  0.5f, -0.5f, /* Vertex 2 (X, Y) */
@@ -78,7 +78,7 @@ glBindVertexArray(vao);
  /*set up the vertex buffer object*/
  glGenBuffers(1, &vbo);
  glBindBuffer(GL_ARRAY_BUFFER, vbo);
- glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
+ /*glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);*/
 
  /*optionally, display the shader source to test if it is correct*/
 /*
@@ -91,16 +91,16 @@ vertexShader = glCreateShader(GL_VERTEX_SHADER);
 glShaderSource(vertexShader, 1, &vertexSource, NULL);
 glCompileShader(vertexShader);
 
-glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &status);
-if(status==GL_TRUE){printf("Vertex Shader is Compiled\n");}
+/*glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &status);
+if(status==GL_TRUE){printf("Vertex Shader is Compiled\n");}*/
 
 /*compile the fragment shader*/
 fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 glShaderSource(fragmentShader, 1, &fragmentSource, NULL);
 glCompileShader(fragmentShader);
 
-glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &status);
-if(status==GL_TRUE){printf("Fragment Shader is Compiled\n");}
+/*glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &status);
+if(status==GL_TRUE){printf("Fragment Shader is Compiled\n");}*/
 
 /*connect the shaders into a program*/
 shaderProgram = glCreateProgram();
@@ -129,6 +129,10 @@ glEnableVertexAttribArray(posAttrib);
  main_polygon.step=2;
  main_polygon.radians=0;
 
+/*
+ can set whether the screen refreshes in sync with the hardware or whether it is unlimited
+ and goes crazy fast! 0=crazy 1=vsync
+*/
  SDL_GL_SetSwapInterval(1);
 
  loop=1;
