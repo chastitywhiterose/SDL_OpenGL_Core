@@ -133,6 +133,7 @@ glEnableVertexAttribArray(posAttrib);
  main_polygon.radians=0;
  
  init_checkerboard();
+ main_check.rectsize=16;
 
 /*
  can set whether the screen refreshes in sync with the hardware or whether it is unlimited
@@ -148,7 +149,7 @@ glEnableVertexAttribArray(posAttrib);
   
   glClear(GL_COLOR_BUFFER_BIT);
  
-  glUniform3f(uniColor, 1.0f, 1.0f, 0.0f);
+  glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);
   gl_chaste_checker();
   
   glUniform3f(uniColor, 0.0f, 1.0f, 0.0f);

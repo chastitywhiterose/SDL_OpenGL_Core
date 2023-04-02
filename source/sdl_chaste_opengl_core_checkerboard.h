@@ -25,7 +25,71 @@ void init_checkerboard()
  main_check.rectsize=32;
 }
 
+
+
+
+/*
+ this function draws a checkerboard
+ it draws every square of the checkerboard and switches between black and white
+*/
 void gl_chaste_checker()
+{
+ int x,y,index,index1;
+ index=0;
+ y=main_check.y_begin;
+ while(y<main_check.y_end)
+ {
+  index1=index;
+  x=main_check.x_begin;
+  while(x<main_check.x_end)
+  {
+   if(index==1){gl_chaste_rectangle(x,y,main_check.rectsize,main_check.rectsize);}
+   index^=1;
+   x+=main_check.rectsize;
+  }
+  index=index1^1;
+  y+=main_check.rectsize;
+ }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ this function draws a checkerboard
+ it draws every square of the checkerboard and switches between black and white
+*/
+void gl_chaste_checker1()
 {
  int x,y,index,index1;
  index=0;
@@ -38,7 +102,7 @@ void gl_chaste_checker()
   {
    if(index==0){glUniform3f(uniColor, 0.0f, 0.0f, 0.0f);}
    if(index==1){glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);}
-   gl_chaste_rectangle(x,y,x+main_check.rectsize,main_check.rectsize);
+   gl_chaste_rectangle(x,y,main_check.rectsize,main_check.rectsize);
    index^=1;
    x+=main_check.rectsize;
   }
@@ -47,4 +111,9 @@ void gl_chaste_checker()
  }
 
 }
+
+
+
+
+
 
