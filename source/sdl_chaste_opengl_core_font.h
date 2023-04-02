@@ -67,3 +67,121 @@ struct chaste_font chaste_font_load(char *s)
  return new_font;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ The scaled version of my font drawing function that uses direct pixel access.
+ 
+ It reads pixels from a source surface and then constructs OpenGL rectangles of size scale.
+ 
+ This is entirely my code because I understand how to access the pixels directly.
+ This allows for portability to any graphics/media library.
+ But SDL is rather superior to other libraries because it allows me to access the pixels the way I want.
+*/
+
+void gl_chaste_font(char *s,int cx,int cy,int scale)
+{
+ int x,y,i,c,cx_start=cx;
+ Uint32 *ssp; /*ssp is short for Source Surface Pointer*/
+ int sx,sy,sx2,sy2,dx,dy; /*x,y coordinates for both source and destination*/
+ Uint32 pixel; /*pixel that will be read from*/
+ int source_surface_width;
+ SDL_Rect rect_source,rect_dest;
+
+ source_surface_width=main_font.surface->w;
+
+ SDL_LockSurface(main_font.surface);
+
+ 
+ ssp=(Uint32*)main_font.surface->pixels;
+  
+ i=0;
+ while(s[i]!=0)
+ {
+  c=s[i];
+  if(c=='\n'){ cx=cx_start; cy+=main_font.char_height*scale;}
+  else
+  {
+   x=(c-' ')*main_font.char_width;
+   y=0*main_font.char_height;
+
+   /*set up source rectangle where this character will be copied from*/
+   rect_source.x=x;
+   rect_source.y=y;
+   rect_source.w=main_font.char_width;
+   rect_source.h=main_font.char_height;
+
+   /*set up destination rectangle where this character will be drawn to*/
+   rect_dest.x=cx;
+   rect_dest.y=cy;
+   
+   /*Now for the ultra complicated stuff that only Chastity can read and understand!*/
+   sx2=rect_source.x+rect_source.w;
+   sy2=rect_source.y+rect_source.h;
+   
+   dx=rect_dest.x;
+   dy=rect_dest.y;
+   
+   sy=rect_source.y;
+   while(sy<sy2)
+   {
+    dx=rect_dest.x;
+    sx=rect_source.x;
+    while(sx<sx2)
+    {
+     pixel=ssp[sx+sy*source_surface_width];
+ 
+     if(pixel!=0) /*only if source pixel is nonzero(not black) draw square to destination*/
+     {
+      int tx,ty,tx2,ty2; /*temp variables only for the square*/
+      ty2=dy+scale;
+      
+      /*draw a square of width/height equal to scale*/      
+      ty=dy;
+      while(ty<ty2)
+      {
+       tx=dx;
+       tx2=dx+scale;
+       while(tx<tx2)
+       {
+        /*dsp[tx+ty*width]=color;*/
+        tx++;
+       }
+       ty++;
+      }
+      /*end of rectangle*/
+     }
+     sx++;
+     dx+=scale;
+    }
+    sy++;
+    dy+=scale;
+   }
+   /*End of really complicated section*/
+   cx+=main_font.char_width*scale;
+  }
+  i++;
+ }
+ SDL_UnlockSurface(main_font.surface);
+}
+

@@ -157,6 +157,8 @@ glEnableVertexAttribArray(posAttrib);
   /*glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);
   gl_chaste_checker();*/
   
+  glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);
+  
   glUniform3f(uniColor, 0.0f, 1.0f, 0.0f);
   gl_chaste_polygon();
   main_polygon.radians+=PI/180; 
