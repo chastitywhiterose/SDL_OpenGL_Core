@@ -25,6 +25,7 @@ GLint uniColor;
 #include "chaste_opengl_core.h"
 #include "sdl_chaste_opengl_core_polygon.h"
 #include "sdl_chaste_opengl_core_checkerboard.h"
+#include "sdl_chaste_opengl_core_font.h"
 
 GLuint vao;
 GLuint vbo;
@@ -78,7 +79,7 @@ int main(int argc, char *argv[])
 glGenVertexArrays(1, &vao);
 glBindVertexArray(vao);
  
- /*set up the vertex buffer object*/
+ /*set up the vertex array buffer object*/
  glGenBuffers(1, &vbo);
  glBindBuffer(GL_ARRAY_BUFFER, vbo);
  /*glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);*/
@@ -140,6 +141,10 @@ glEnableVertexAttribArray(posAttrib);
  and goes crazy fast! 0=crazy 1=vsync
 */
  SDL_GL_SetSwapInterval(1);
+ 
+  /*this game will only load two fonts*/
+ font_pico8=chaste_font_load("./font/PICO-8_4x6.bmp");
+ font_8=chaste_font_load("./font/FreeBASIC Font 8.bmp");
 
  loop=1;
  while(loop)
@@ -149,8 +154,8 @@ glEnableVertexAttribArray(posAttrib);
   
   glClear(GL_COLOR_BUFFER_BIT);
  
-  glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);
-  gl_chaste_checker();
+  /*glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);
+  gl_chaste_checker();*/
   
   glUniform3f(uniColor, 0.0f, 1.0f, 0.0f);
   gl_chaste_polygon();
@@ -174,6 +179,10 @@ glEnableVertexAttribArray(posAttrib);
   SDL_GL_SwapWindow( window );
   
  }
+
+ /*free font surfaces from memory*/ 
+ SDL_FreeSurface(font_pico8.surface);
+ SDL_FreeSurface(font_8.surface);
  
  
  glDeleteProgram(shaderProgram);
