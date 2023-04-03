@@ -9,6 +9,10 @@ https://learnopengl.com/
 https://gist.github.com/koute/7391344
 https://docs.gl/
 
+To get the modern features of OpenGL loaded, it is necessary to use an OpenGL extension loading library. A lot of tutorials use GLEW.
+
+https://glew.sourceforge.net/
+
 Although learning modern OpenGL is useful in some cases, SDL already has a feature to draw arbitrary numbers of triangles with the new SDL_RenderGeometry. There is very little that it can't do. This is my primary means of doing filled polygons.
 
 https://wiki.libsdl.org/SDL2/SDL_RenderGeometry
