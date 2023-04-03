@@ -3,6 +3,7 @@
 #include <SDL.h>
 #include <SDL_opengl.h>
 #include <stdio.h>
+#include <math.h>
 
 int width=1280,height=720;
 
