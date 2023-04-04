@@ -133,6 +133,7 @@ glEnableVertexAttribArray(posAttrib);
  main_polygon.sides=5;
  main_polygon.step=2;
  main_polygon.radians=0;
+ main_polygon.radius=300;
  
  init_checkerboard();
  main_check.rectsize=16;
@@ -146,6 +147,8 @@ glEnableVertexAttribArray(posAttrib);
   /*this game will only load two fonts*/
  font_pico8=chaste_font_load("./font/PICO-8_4x6.bmp");
  font_8=chaste_font_load("./font/FreeBASIC Font 8.bmp");
+ 
+ main_font=font_8;
 
  loop=1;
  while(loop)
@@ -155,22 +158,23 @@ glEnableVertexAttribArray(posAttrib);
   
   glClear(GL_COLOR_BUFFER_BIT);
  
-  /*glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);
+/*  glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);
   gl_chaste_checker();*/
   
-  glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);
+
   
   glUniform3f(uniColor, 0.0f, 1.0f, 0.0f);
   gl_chaste_polygon();
   main_polygon.radians+=PI/180; 
   
   glUniform3f(uniColor, 0.0f, 0.0f, 1.0f);
-  gl_chaste_triangle(600,350,700,350,650,250);
+  gl_chaste_triangle(100,650,200,650,150,550);
   
   glUniform3f(uniColor, 1.0f, 0.0f, 0.0f);
   gl_chaste_rectangle(100,100,100,100);
   
-
+    glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);
+  gl_chaste_font("Hello World",400,650,4);
   
   SDL_PollEvent( &event );
   if( event.type == SDL_QUIT ){loop=0;}

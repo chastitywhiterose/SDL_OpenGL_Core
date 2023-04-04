@@ -106,13 +106,11 @@ void gl_chaste_font(char *s,int cx,int cy,int scale)
  int sx,sy,sx2,sy2,dx,dy; /*x,y coordinates for both source and destination*/
  Uint32 pixel; /*pixel that will be read from*/
  int source_surface_width;
- SDL_Rect rect_source,rect_dest;
+ SDL_Rect rect_source;
 
  source_surface_width=main_font.surface->w;
 
- SDL_LockSurface(main_font.surface);
-
- 
+ /*SDL_LockSurface(main_font.surface);*/
  ssp=(Uint32*)main_font.surface->pixels;
   
  i=0;
@@ -131,45 +129,29 @@ void gl_chaste_font(char *s,int cx,int cy,int scale)
    rect_source.w=main_font.char_width;
    rect_source.h=main_font.char_height;
 
-   /*set up destination rectangle where this character will be drawn to*/
-   rect_dest.x=cx;
-   rect_dest.y=cy;
-   
+ 
    /*Now for the ultra complicated stuff that only Chastity can read and understand!*/
    sx2=rect_source.x+rect_source.w;
    sy2=rect_source.y+rect_source.h;
    
-   dx=rect_dest.x;
-   dy=rect_dest.y;
+   dx=cx;
+   dy=cy;
    
    sy=rect_source.y;
    while(sy<sy2)
    {
-    dx=rect_dest.x;
+    dx=cx;
     sx=rect_source.x;
     while(sx<sx2)
     {
      pixel=ssp[sx+sy*source_surface_width];
- 
+
+      pixel&=0xFFFFFF;
+     
+     /*printf("pixel 0x%06X %d,%d\n",pixel,sx,sy);*/
      if(pixel!=0) /*only if source pixel is nonzero(not black) draw square to destination*/
      {
-      int tx,ty,tx2,ty2; /*temp variables only for the square*/
-      ty2=dy+scale;
-      
-      /*draw a square of width/height equal to scale*/      
-      ty=dy;
-      while(ty<ty2)
-      {
-       tx=dx;
-       tx2=dx+scale;
-       while(tx<tx2)
-       {
-        /*dsp[tx+ty*width]=color;*/
-        tx++;
-       }
-       ty++;
-      }
-      /*end of rectangle*/
+      gl_chaste_rectangle(dx,dy,scale,scale);
      }
      sx++;
      dx+=scale;
@@ -182,6 +164,6 @@ void gl_chaste_font(char *s,int cx,int cy,int scale)
   }
   i++;
  }
- SDL_UnlockSurface(main_font.surface);
+ /*SDL_UnlockSurface(main_font.surface);*/
 }
 
