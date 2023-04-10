@@ -73,9 +73,17 @@ int main(int argc, char *argv[])
  SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
  SDL_GL_SetAttribute(SDL_GL_STENCIL_SIZE, 8);
  
- window = SDL_CreateWindow("OpenGL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL|SDL_WINDOW_RESIZABLE);
+ window = SDL_CreateWindow("OpenGL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_OPENGL/*|SDL_WINDOW_RESIZABLE*/);
  
  context = SDL_GL_CreateContext(window);
+
+ /*display info of OpenGL*/
+
+ printf("GL_VENDOR: %s\n",glGetString(GL_VENDOR));
+ printf("GL_RENDERER: %s\n",glGetString(GL_RENDERER)); 
+
+ printf("GL_VERSION: %s\n",glGetString(GL_VERSION)); 
+ printf("GL_SHADING_LANGUAGE_VERSION: %s\n",glGetString(GL_SHADING_LANGUAGE_VERSION));
 
  /*use modern functions*/ 
  /*glewExperimental = GL_TRUE;*/
