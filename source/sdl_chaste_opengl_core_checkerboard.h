@@ -16,6 +16,7 @@ struct checkerboard
 
 struct checkerboard main_check;
 
+/*set up initial state to allow drawing checkerboard to whole screen*/
 void init_checkerboard()
 {
  main_check.x_begin=0;

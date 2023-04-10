@@ -1,20 +1,25 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include <SDL.h>
-#include <SDL_opengl.h>
+
+/*#include <SDL_opengl.h>*/
 #include <stdio.h>
 #include <math.h>
 
 int width=1280,height=720;
 
-
+int mx=100,dx=1;
 
 SDL_Window* window;
 SDL_GLContext context;
 SDL_Event event;
 int loop=1;
 
-float vertices[0x1000000]=
+/*
+ the size of this array greatly determines the size of the executable
+ technically the minimum to make everything in the program still work is 12.
+*/
+float vertices[12]=
 {
  0.0f,  0.5f, /* Vertex 1 (X, Y) */
  0.5f, -0.5f, /* Vertex 2 (X, Y) */
@@ -73,7 +78,7 @@ int main(int argc, char *argv[])
  context = SDL_GL_CreateContext(window);
 
  /*use modern functions*/ 
- glewExperimental = GL_TRUE;
+ /*glewExperimental = GL_TRUE;*/
  glewInit();
  
  /*vertex array object*/
@@ -137,6 +142,8 @@ glEnableVertexAttribArray(posAttrib);
  
  init_checkerboard();
  main_check.rectsize=16;
+ main_check.x_end=width/2;
+ /*main_check.y_end=height/2;*/
 
 /*
  can set whether the screen refreshes in sync with the hardware or whether it is unlimited
@@ -149,6 +156,10 @@ glEnableVertexAttribArray(posAttrib);
  font_8=chaste_font_load("./font/FreeBASIC Font 8.bmp");
  
  main_font=font_8;
+ 
+ glEnable(GL_COLOR_LOGIC_OP);
+ glLogicOp(GL_XOR);
+ /* glDisable(GL_COLOR_LOGIC_OP);*/
 
  loop=1;
  while(loop)
@@ -156,25 +167,36 @@ glEnableVertexAttribArray(posAttrib);
   /*SDL_GetWindowSize(window, &width,&height);
   glViewport( 0, 0, width, height );*/
   
+/*  glDisable(GL_COLOR_LOGIC_OP);*/
+  
   glClear(GL_COLOR_BUFFER_BIT);
  
-/*  glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);
-  gl_chaste_checker();*/
+  glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);
+  gl_chaste_checker();
   
 
   
-  glUniform3f(uniColor, 0.0f, 1.0f, 0.0f);
+/*  glUniform3f(uniColor, 0.0f, 1.0f, 0.0f);*/
   gl_chaste_polygon();
   main_polygon.radians+=PI/180; 
   
-  glUniform3f(uniColor, 0.0f, 0.0f, 1.0f);
-  gl_chaste_triangle(100,650,200,650,150,550);
+/*  glUniform3f(uniColor, 0.0f, 0.0f, 1.0f);*/
+  gl_chaste_triangle(mx,650,mx+100,650,mx+50,550);
   
-  glUniform3f(uniColor, 1.0f, 0.0f, 0.0f);
-  gl_chaste_rectangle(100,100,100,100);
+/*  glUniform3f(uniColor, 1.0f, 0.0f, 0.0f);*/
+  gl_chaste_rectangle(mx,100,100,100);
   
-    glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);
-  gl_chaste_font("Hello World",400,650,4);
+  /*glUniform3f(uniColor, 1.0f, 1.0f, 1.0f);*/
+  gl_chaste_font("Hello World",800,600,4);
+  
+    gl_chaste_font("OpenGL",800,150,4);
+
+  
+  mx+=dx;
+  
+  if(mx>=width){dx=-1;}
+  if(mx<=0){dx=1;}
+
   
   SDL_PollEvent( &event );
   if( event.type == SDL_QUIT ){loop=0;}
